@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name" translatable="false">Arschloch</string>
+    <string name="action_settings">Settings</string>
+    <string name="getUserName_defaultMessage">User Name:</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="desc_wip">This is still Work in Progress\nWill be eventually Finished Later !\nSee http://github.com/peerzombie/Arschloch for more Info !</string>
+    <string name="button_cancle">Cancel</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="ui_new_game">New Game</string>
+    <string name="ui_save_game">Save Game</string>
+    <string name="ui_load_game">Load Game</string>
+    <string name="ui_auto_sel_card_tap">Auto Select Card on Tap:</string>
+    <string name="ui_switch_off">Off</string>
+    <string name="ui_switch_on">On</string>
+    <string name="ui_getDefLang_desc">Language:</string>
+    <string name="ui_force_card_select">Select Card</string>
+</resources>

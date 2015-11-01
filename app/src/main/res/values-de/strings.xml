@@ -1,0 +1,16 @@
+<resources>
+    <string name="action_settings">Einstellungen</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="getUserName_defaultMessage">Benutzername:</string>
+    <string name="desc_wip">Dies is noch in Arbeit\nKommt vielleicht später !\nSiehe http://github.com/peerzombie/Arschloch für mehr Informationen !</string>
+    <string name="button_cancle">Abbrechen</string>
+    <string name="button_confirm">OK</string>
+    <string name="ui_load_game">Spiel Laden</string>
+    <string name="ui_new_game">Neues Spiel</string>
+    <string name="ui_save_game">Spiel Speichern</string>
+    <string name="ui_auto_sel_card_tap">Automatisch karte bei klick hinzufügen:</string>
+    <string name="ui_switch_off">Aus</string>
+    <string name="ui_switch_on">An</string>
+    <string name="ui_getDefLang_desc">Sprache:</string>
+    <string name="ui_force_card_select">Karte Wählen</string>
+</resources>
