@@ -16,17 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package de.noobstudios.cardgame.Controllers.Types;
+package de.noobstudios.cardgame.Controllers.save;
 
-/**
- * Created by TheLazyAdmin on 24.10.2015.
- */
-public enum UserState {
-    UserOffline,
-    UserConnecting,
-    UserConnected,
-    UserConnectionFailure,
-    UserPlayChoosing,
-    UserPlayFinished,
-    CodeFinnishedNextUser
+import de.noobstudios.cardgame.Controllers.player.Player;
+import de.noobstudios.cardgame.Controllers.game.Card;
+
+public class Save {
+    public String savedAt = "";
+    public Card[] cardsOnTable = new Card[0];
+    public Card[] cardsInHand = new Card[0];
+    public Card[] cardsInStaple = new Card[0];
+    public Player[] players = new Player[0];
 }

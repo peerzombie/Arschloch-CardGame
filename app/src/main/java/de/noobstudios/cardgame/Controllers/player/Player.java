@@ -16,17 +16,33 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package de.noobstudios.cardgame.Controllers.Types;
+package de.noobstudios.cardgame.Controllers.player;
 
-/**
- * Created by TheLazyAdmin on 24.10.2015.
- */
-public enum UserState {
-    UserOffline,
-    UserConnecting,
-    UserConnected,
-    UserConnectionFailure,
-    UserPlayChoosing,
-    UserPlayFinished,
-    CodeFinnishedNextUser
+import java.util.UUID;
+
+public class Player {
+    public String _name;
+    public String _guid;
+    public int _PlayerNumber;
+
+    /**
+     * @param playerName Name of Player
+     * @param guid Random GUID ( get from Player.getUUID(); )
+     */
+
+    public Player() {
+        this("noname", "noguid", 0);
+    }
+    public Player(String playerName, String guid) {
+        this(playerName, guid, 0);
+    }
+
+    public Player(String playerName, String guid, int PlayerNumber) {
+        _name = playerName;
+        _guid = guid;
+        _PlayerNumber = PlayerNumber;
+    }
+    public static UUID getUUID() {
+        return java.util.UUID.randomUUID();
+    }
 }

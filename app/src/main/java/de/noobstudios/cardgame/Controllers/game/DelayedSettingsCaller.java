@@ -16,17 +16,29 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package de.noobstudios.cardgame.Controllers.Types;
+package de.noobstudios.cardgame.Controllers.game;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
- * Created by TheLazyAdmin on 24.10.2015.
+ * Created by TheLazyAdmin on 01.11.2015.
  */
-public enum UserState {
-    UserOffline,
-    UserConnecting,
-    UserConnected,
-    UserConnectionFailure,
-    UserPlayChoosing,
-    UserPlayFinished,
-    CodeFinnishedNextUser
+public class DelayedSettingsCaller {
+    Timer t = new Timer();;
+    long dur = 0;
+    DelayedSettingsCaller(long duration) {
+        dur = duration;
+    }
+    public synchronized void CallMethod() {
+        t.cancel();
+        t = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+
+            }
+        };
+
+    }
 }

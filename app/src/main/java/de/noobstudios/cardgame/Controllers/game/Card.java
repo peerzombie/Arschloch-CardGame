@@ -16,17 +16,23 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package de.noobstudios.cardgame.Controllers.Types;
+package de.noobstudios.cardgame.Controllers.game;
 
-/**
- * Created by TheLazyAdmin on 24.10.2015.
- */
-public enum UserState {
-    UserOffline,
-    UserConnecting,
-    UserConnected,
-    UserConnectionFailure,
-    UserPlayChoosing,
-    UserPlayFinished,
-    CodeFinnishedNextUser
+public class Card {
+
+    int weight = 0;
+    int index = 0;
+    String typeName = "null";
+
+    public Card() {
+
+    }
+    public Card[] getCards(int playerCount) {
+        return new Card[0];
+    }
+
+    public Card[] getStandardDeck() {
+        Card[] c = new Card[51];
+        return c;
+    }
 }

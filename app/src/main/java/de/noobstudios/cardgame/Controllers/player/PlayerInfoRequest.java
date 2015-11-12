@@ -16,17 +16,20 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package de.noobstudios.cardgame.Controllers.Types;
+package de.noobstudios.cardgame.Controllers.player;
 
 /**
- * Created by TheLazyAdmin on 24.10.2015.
+ * Created by TheLazyAdmin on 28.10.2015.
  */
-public enum UserState {
-    UserOffline,
-    UserConnecting,
-    UserConnected,
-    UserConnectionFailure,
-    UserPlayChoosing,
-    UserPlayFinished,
-    CodeFinnishedNextUser
+public class PlayerInfoRequest {
+    public String playerName;
+    public int languageIndexCode;
+    public PlayerInfoRequest() {
+        playerName = "noname";
+        languageIndexCode = 0;
+    };
+    public PlayerInfoRequest(String pName, int index) {
+        playerName = pName;
+        languageIndexCode = index;
+    }
 }

@@ -1,5 +1,25 @@
+/*
+ * Copyright (C) 2015 Peer Bölts
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
 package de.noobstudios.cardgame;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,11 +40,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.File;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-import de.noobstudios.cardgame.Controllers.Game;
-import de.noobstudios.cardgame.Controllers.Player;
-import de.noobstudios.cardgame.Controllers.PlayerInfoRequest;
-import de.noobstudios.cardgame.Controllers.SaveGameHandler;
+import de.noobstudios.cardgame.Controllers.game.Game;
+import de.noobstudios.cardgame.Controllers.player.Player;
+import de.noobstudios.cardgame.Controllers.player.PlayerInfoRequest;
+import de.noobstudios.cardgame.Controllers.player.PlayerSaveData;
+import de.noobstudios.cardgame.Controllers.save.SaveGameHandler;
+import de.noobstudios.cardgame.Controllers.Types.CardTypes;
 import de.noobstudios.cardgame.Controllers.Types.GameState;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,14 +80,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //CM CODE BEGINS HERE
-        getUsername();
         appFilesDir = getFilesDir().getAbsolutePath();
         savepath = new File(appFilesDir + "\\sv.json");
-        if (savepath.exists()) {
-            firstRun = false;
+        if (!PlayerSaveData.chkFirstRun(getSharedPreferences("player", 0))) {
+
         }
         else {
-            FIRSTRUN("NOUSER");
+            getUsername();
         }
         //FIRSTRUN END
         adapter_console = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
@@ -83,20 +106,43 @@ public class MainActivity extends AppCompatActivity {
                 adapter_selectedCards.add("SEL=" + i);
             }
         }
-        adapter_console.add(lang[tmpUserRequest.languageIndexCode]);
-        adapter_console.add(tmpUserRequest.playerName);
+        adapter_console.add("" + CardTypes.valueOf("PikSchwarz2"));
         //TODO Add UI
         //TODO Add Logic
         //TODO Add P2P
         //TODO Add Networking
+        for (Account acc : getGACC()) {
+            adapter_console.add( "TYPE=" + acc.type + " | NAME=" + acc.name + " | STR=" + acc.toString());
+            adapter_console.add("SHAHASHOFUSERMAIL" + )
+        }
+
     }
+    public String getStrHash(String arg0) {
+        try {
+            MessageDigest dg = MessageDigest.getInstance("SHA-512");
+            dg.update(arg0.getBytes());
+            return new String(dg.digest());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public Account[] getGACC() {
+        AccountManager manager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
+        Account[] list = manager.getAccountsByType("com.google");
+        if (list.length > 0) {
+            return list;
+        }
+        else return new Account[0];
+    }
+
 
     private void FIRSTRUN(String UName) {
         Player p = new Player();
         //PlayerInfoRequest nfo = getUsername("GET USERNAME");
         p._guid = p.getUUID().toString();
         p._name = tmpUserRequest.playerName;
-        SaveGameHandler sgh = new SaveGameHandler(savepath.getAbsolutePath());
+
 
     }
 
@@ -108,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
 
         // set prompts.xml to alertdialog builder
         alertDialogBuilder.setView(promptsView);
-
         final EditText userInput = (EditText) promptsView
                 .findViewById(R.id.editTextDialogUserInput);
         final Spinner cLanguage = (Spinner) promptsView.findViewById(R.id.prompt_langSpinn);
@@ -144,15 +189,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void applyDataFromFIRSTRUN(String s, int selectedItemPosition, long selectedItemId) {
         tmpUserRequest = new PlayerInfoRequest(s, selectedItemPosition);
-        final View vview = findViewById(R.id.mlayout);
-        Snackbar.make(vview, "DATA: " + s + " | " + selectedItemPosition, Snackbar.LENGTH_INDEFINITE).setAction("Close", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar s = Snackbar.make(vview, "ACTION::CLOSE::IMMEDIATELY::(NOW)", Snackbar.LENGTH_SHORT).setAction("Close", null);
-                s.show();
-                s.dismiss();
-            }
-        }).show();
+        adapter_console.add(lang[tmpUserRequest.languageIndexCode]);
+        adapter_console.add(tmpUserRequest.playerName);
+        PlayerSaveData save = new PlayerSaveData(getSharedPreferences("player", 0));
+        if (save.readSave()._guid != null) save.writeSave(tmpUserRequest.playerName, Player.getUUID().toString(), 0);
+        adapter_console.add(save.readSave()._guid);
+        PlayerSaveData.wrtFirstRun(getSharedPreferences("player", 0), false);
     }
 
 
